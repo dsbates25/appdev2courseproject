@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+            width: 14%; /* Equal width for each section */
+        }
+        th {
+            background-color: lightgray;
+        }
+        h2 {
+            text-align: center;
+        }
+        .header {
+            background-color: lightblue;
+            padding: 5px;
+            text-align: center;
+        }
+        .login-button {
+            padding: 6px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .login-button:hover {
+            background-color: #45a049;
+        }
+        .red-text {
+            color: red;
+        }
+        .blue-text {
+            color: blue;
+        }
+        .orange-text {
+            color: orange;
+        }
+        .green-text {
+            color: green;
+        }
+        .key {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 style="margin-bottom: 5px;">Task Manager</h1>
+        <button class="login-button" onclick="showLogin()">Login</button>
+    </div>
+    
+    <!-- Login Form (Initially Hidden) -->
+    <div id="login-form" style="display: none;">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username"><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"><br>
+            <input type="submit" value="Login" class="login-button">
+        </form>
+    </div>
+    
+    <!-- Sample Tasks Section -->
+    <div>
+        <h2>Sample User View</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sample task rows -->
+                <tr>
+                    <td class="red-text">Complete Project Proposal</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="orange-text">Math Homework</td>
+                    <td></td>
+                    <td class="green-text">Grocery Shopping</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="blue-text">Review Code Changes</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <!-- Add more sample tasks as needed -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Key for Task Importance -->
+    <div class="key">
+        <p>Tasks ranked by importance:</p>
+        <p>Red: 1, Blue: 2, Orange: 3, Green: 4</p>
+    </div>
+
+    <script>
+        function showLogin() {
+            document.getElementById("login-form").style.display = "block";
+        }
+    </script>
+</body>
+</html>
