@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+            width: 14%;
+        }
+        th {
+            background-color: lightgray;
+        }
+        h2 {
+            text-align: center;
+        }
+        .header {
+            background-color: lightblue;
+            padding: 1px;
+            text-align: center;
+        }
+        .login-button {
+            padding: 6px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .login-button:hover {
+            background-color: #45a049;
+        }
+        .red-text {
+            color: red;
+        }
+        .blue-text {
+            color: blue;
+        }
+        .orange-text {
+            color: orange;
+        }
+        .green-text {
+            color: green;
+        }
+        .key {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 style="margin-bottom: 5px;">Task Manager</h1>
+    </div>
+    
+    <div>
+       
+        <form id="taskForm">
+            <label for="day">Day:</label>
+            <select id="day" name="day">
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select><br>
+            <label for="task">Task:</label>
+            <input type="text" id="task" name="task"><br>
+            <label for="importance">Importance:</label>
+            <select id="importance" name="importance">
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="orange">Orange</option>
+                <option value="green">Green</option>
+            </select><br>
+            <input type="submit" value="Add Task" class="login-button">
+        </form>
+    </div>
+
+    <div>
+        <h2></h2>
+        <table id="taskTable">
+            <thead>
+                <tr>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                </tr>
+            </thead>
+            <tbody id="taskBody">
+               
+            </tbody>
+        </table>
+    </div>
+
+    
+    <div class="key">
+        <p>Tasks ranked by importance:</p>
+        <p>Red: Most, Blue: 2nd Most , Orange: 3rd Most, Green: Least</p>
+    </div>
+
+    <script>
+        document.getElementById("taskForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            addTask();
+        });
+
+        function addTask() {
+            var form = document.getElementById("taskForm");
+            var day = form.elements["day"].value;
+            var task = form.elements["task"].value;
+            var importance = form.elements["importance"].value;
+            var table = document.getElementById("taskTable");
+            var dayIndex = getDayIndex(day);
+            var tbody = document.getElementById("taskBody");
+            
+           
+            if (!tbody.rows[0]) {
+                var newRow = tbody.insertRow(0);
+                for (var i = 0; i < 7; i++) {
+                    newRow.insertCell(i);
+                }
+            }
+
+            var row = tbody.rows[0];
+            var cell = row.cells[dayIndex];
+            var newTaskElement = document.createElement("div");
+            newTaskElement.innerHTML = task + ' <button class="delete-button" onclick="deleteTask(this)">Delete</button>';
+            newTaskElement.className = importance + "-text";
+            cell.appendChild(newTaskElement);
+        }
+
+        function deleteTask(button) {
+            var taskToDelete = button.parentNode;
+            taskToDelete.parentNode.removeChild(taskToDelete);
+        }
+
+        function getDayIndex(day) {
+            switch(day) {
+                case "Monday":
+                    return 0;
+                case "Tuesday":
+                    return 1;
+                case "Wednesday":
+                    return 2;
+                case "Thursday":
+                    return 3;
+                case "Friday":
+                    return 4;
+                case "Saturday":
+                    return 5;
+                case "Sunday":
+                    return 6;
+                default:
+                    return -1;
+            }
+        }
+    </script>
+</body>
+</html>
